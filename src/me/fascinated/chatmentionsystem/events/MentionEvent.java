@@ -18,6 +18,10 @@ public class MentionEvent implements Listener {
         String msg = e.getMessage();
         FileConfiguration config = Main.config.getConfiguration();
 
+        if (msg.contains(p.getName())) {
+            return;
+        }
+
         for(Player target : Bukkit.getOnlinePlayers()) {
             if(msg.contains(target.getName())) {
                 target.playSound(target.getEyeLocation(), Sound.valueOf(config.getString("Sound")), 0.9f, 1);

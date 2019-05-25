@@ -1,7 +1,10 @@
-package me.imfascinated.chatmentionsystem.events;
+package me.fascinated.chatmentionsystem.events;
 
+import me.fascinated.chatmentionsystem.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,15 +16,12 @@ public class MentionEvent implements Listener {
     public void onMention(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msg = e.getMessage();
-
-        if(msg.contains(p.getName())) {
-            return;
-        }
+        FileConfiguration config = Main.config.getConfiguration();
 
         for(Player target : Bukkit.getOnlinePlayers()) {
             if(msg.contains(target.getName())) {
-                target.playSound(target.getEyeLocation(), Sound.LEVEL_UP, 0.9f, 1);
-                target.sendMessage("§a§l>§2§l> §a" + p.getName() + " has mentioned you. §a§l<§2§l<");
+                target.playSound(target.getEyeLocation(), Sound.valueOf(config.getString("Sound")), 0.9f, 1);
+                target.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("Message").replace("$player", target.getName())));
             }
         }
     }

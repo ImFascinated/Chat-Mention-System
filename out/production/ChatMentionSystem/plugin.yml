@@ -1,0 +1,4 @@
+name: ChatMentions
+version: 0.21-SNAPSHOT
+main: me.fascinated.chatmentionsystem.Main
+author: _Fascinated

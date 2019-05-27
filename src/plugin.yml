@@ -1,4 +1,6 @@
 name: ChatMentions
-version: 0.21-SNAPSHOT
+version: 0.22-SNAPSHOT
 main: me.fascinated.chatmentionsystem.Main
 author: _Fascinated
+commands:
+  mentions:

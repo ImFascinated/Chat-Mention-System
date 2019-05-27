@@ -1,7 +1,9 @@
 package me.fascinated.chatmentionsystem;
 
+import me.fascinated.chatmentionsystem.commands.Mentions;
 import me.fascinated.chatmentionsystem.events.MentionEvent;
 import me.fascinated.chatmentionsystem.util.Config;
+import me.fascinated.chatmentionsystem.util.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static org.bukkit.Bukkit.getConsoleSender;
@@ -9,9 +11,13 @@ import static org.bukkit.Bukkit.getConsoleSender;
 public class Main extends JavaPlugin {
 
     public static Config config;
+    public static Main instance;
 
     public void onEnable() {
-        registerEvents();
+        instance = this;
+        new Metrics(this);
+        getServer().getPluginManager().registerEvents(new MentionEvent(), this);
+        getCommand("mentions").setExecutor(new Mentions());
         config = new Config(this, "config.yml", null);
         config.saveDefaultConfig();
         getConsoleSender().sendMessage("§8§m-----------------------------------------");
@@ -25,8 +31,5 @@ public class Main extends JavaPlugin {
         getConsoleSender().sendMessage("§aTwitter: §ftwitter.com/RealFascinated");
         getConsoleSender().sendMessage("§8§m-----------------------------------------");
 
-    }
-    private void registerEvents() {
-        getServer().getPluginManager().registerEvents(new MentionEvent(), this);
     }
 }
